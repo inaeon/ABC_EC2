@@ -2,14 +2,14 @@
 pipeline {
 	agent any 
 	environment {
-		IMAGE_NAME = "avdeshsainger/abctechnologies"
+		IMAGE_NAME = "inaeondocker/abctechnologies"
 	}
 	
 	
 	stages {
 		stage('code checkout') {
 			steps {
-				git branch: 'main', url: 'https://github.com/inaeon/ABC.git'
+				git branch: 'main', url: 'https://github.com/inaeon/ABC_EC2.git'
 			}
 		}
 		stage('code compile') {
@@ -35,7 +35,7 @@ pipeline {
 		}
 		stage('push docker image') {
 			steps {
-				withDockerRegistry([credentialsId: "hub.docker.com", url: ""]) {
+				withDockerRegistry([credentialsId: "docker-id", url: ""]) {
 					sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
 				}
 			}
